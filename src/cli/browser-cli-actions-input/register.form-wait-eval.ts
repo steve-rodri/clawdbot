@@ -1,7 +1,7 @@
 import type { Command } from "commander";
+import type { BrowserParentOpts } from "../browser-cli-shared.js";
 import { danger } from "../../globals.js";
 import { defaultRuntime } from "../../runtime.js";
-import type { BrowserParentOpts } from "../browser-cli-shared.js";
 import { callBrowserAct, readFields, resolveBrowserActionContext } from "./shared.js";
 
 export function registerBrowserFormWaitEvalCommands(
@@ -21,7 +21,7 @@ export function registerBrowserFormWaitEvalCommands(
           fields: opts.fields,
           fieldsFile: opts.fieldsFile,
         });
-        const result = await callBrowserAct({
+        const result = await callBrowserAct<{ result?: unknown }>({
           parent,
           profile,
           body: {
@@ -66,7 +66,7 @@ export function registerBrowserFormWaitEvalCommands(
             ? (opts.load as "load" | "domcontentloaded" | "networkidle")
             : undefined;
         const timeoutMs = Number.isFinite(opts.timeoutMs) ? opts.timeoutMs : undefined;
-        const result = await callBrowserAct({
+        const result = await callBrowserAct<{ result?: unknown }>({
           parent,
           profile,
           body: {
@@ -108,7 +108,7 @@ export function registerBrowserFormWaitEvalCommands(
         return;
       }
       try {
-        const result = await callBrowserAct({
+        const result = await callBrowserAct<{ result?: unknown }>({
           parent,
           profile,
           body: {
